@@ -15,7 +15,7 @@ const connection = mysql.createConnection (
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log(`Connected to the employee_db database.`);
+    console.log(` Connected to the employee_db database. `);
     employee_db();
 });
 
@@ -73,7 +73,7 @@ const questions = () => {
 };
 
 function viewAllDepartments() {
-    db.promise().query('SELECT * FROM departments')
+    db.promise().query('SELECT * FROM department')
     .then(([rows])=>{
         let departments = rows;
         console.log('\n');
