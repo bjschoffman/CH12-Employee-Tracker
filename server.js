@@ -3,8 +3,7 @@ require('console.table');
 const inquirer = require ('inquirer');
 const mysql = require('mysql2');
 
-
-const connection = mysql.createConnection (
+const db = mysql.createConnection (
     {
       host: 'localhost',
       port: 3306,
@@ -13,10 +12,10 @@ const connection = mysql.createConnection (
       database: 'employee_db',
     });
 
-connection.connect((err) => {
+db.connect((err) => {
     if (err) throw err;
     console.log(` Connected to the employee_db database. `);
-    employee_db();
+    questions();
 });
 
 const questions = () => {
@@ -86,9 +85,9 @@ function viewAllDepartments() {
 function viewAllRoles () {
     db.promise().query('SELECT * FROM role')
     .then(([rows])=>{
-        let departments = rows;
+        let role = rows;
         console.log('\n');
-        console.table(departments)
+        console.table(role)
     }) .then(()=>{
         questions();
     });
@@ -97,9 +96,9 @@ function viewAllRoles () {
 function viewAllEmployees () {
     db.promise().query('SELECT * FROM employee')
     .then(([rows])=>{
-        let departments = rows;
+        let employee = rows;
         console.log('\n');
-        console.table(departments)
+        console.table(employee)
     }) .then(()=>{
         questions();
     });
@@ -109,7 +108,7 @@ function viewAllEmployees () {
 
 
 
-questions();
+
 
 
 
