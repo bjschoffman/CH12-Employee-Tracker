@@ -65,36 +65,15 @@ const questions = () => {
     }
 
     if (answer.choices === "Exit") {
-        exit();
+        console.log('You have exited the application')
+        process.exit();
     }
 
     });
 };
 
 function viewAllDepartments() {
-    db.promise().query('SELECT * FROM department')
-    .then(([rows])=>{
-        let departments = rows;
-        console.log('\n');
-        console.table(departments)
-    }) .then(()=>{
-        questions();
-    });
-};
-
-function viewAllRoles () {
-    db.promise().query('SELECT * FROM role')
-    .then(([rows])=>{
-        let role = rows;
-        console.log('\n');
-        console.table(role)
-    }) .then(()=>{
-        questions();
-    });
-};   
-
-function viewAllEmployees () {
-    db.promise().query('SELECT * FROM employee')
+    db.promise().query(`SELECT * FROM department`)
     .then(([rows])=>{
         let employee = rows;
         console.log('\n');
@@ -104,9 +83,127 @@ function viewAllEmployees () {
     });
 };
 
+function viewAllRoles() {
+    db.promise().query(`SELECT * FROM role`)
+    .then(([rows])=>{
+        let employee = rows;
+        console.log('\n');
+        console.table(employee)
+    }) .then(()=>{
+        questions();
+    });
+};   
 
+function viewAllEmployees () {
+    db.promise().query(`SELECT * FROM employee`)
+    .then(([rows])=>{
+        let employee = rows;
+        console.log('\n');
+        console.table(employee);
+    }) .then(()=>{
+        questions();
+    });
+};
 
+function addDepartment() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'department_add',
+            message: 'What department would you like to add?'
+        }
+    ]).then((answer) => {
+        db.promise().query(`INSERT INTO department (name) VALUES (?)`, [answer.department_add])
+        .then(([rows])=>{
+            let employee = rows
+            console.log('\n');
+            console.table(employee);
+        })
+    }).then(()=>{
+        questions();
+    });
+};
 
+function addRole() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What job title would you like to add?'  
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for this role?'
+        },
+        {
+            type: 'input',
+            name: 'department',
+            message: 'What is the department ID this role?'
+        }
+    ]).then((answer) => {
+        db.promise().query(`INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`, 
+        [answer.title, answer.salary, answer.department])
+        .then(([rows]) => {
+            let employee = rows;
+            console.log('\n');
+            console.table(employee);
+        })    
+    }).then(() => {
+        questions();
+    });
+};
+
+function addEmployee() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'What is the first name of emplolyee?'  
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'What is the last name of employee?'
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: "What is employee's role ID?"
+        },
+        {
+            type: 'input',
+            name: 'manager_id',
+            message: "What is the employee's manager's ID?"
+        }
+    ]).then((answer) => {
+        db.promise().query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`, 
+        [answer.first_name, answer.last_name, answer.role_id, answer.manager_id])
+        .then(([rows]) => {
+            let employee = rows;
+            console.log('\n');
+            console.table(employee);
+        })    
+    }).then(() => {
+        questions();
+    });
+};
+
+function updateEmployeeRole () {
+    db.promise().query(`SELECT * FROM employee`)
+    .then(([rows])=>{
+        let employee = rows;
+        console.log('\n');
+        console.table(employee);
+    }) 
+    inquirer.prompt ()
+    .then(()=>{
+        questions();
+    });
+    
+};
+    
+  
 
 
 
