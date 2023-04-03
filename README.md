@@ -13,8 +13,7 @@ To run:
 ## Usage
 View the walkthrough here: https://drive.google.com/file/d/1JnlGTodRR5iCzHEP6qmhLdgF91bJd3xn/view 
 ## Credits
-Help from tutor Simon Rennocks
-U of M Full Stack Bootcamp modules
+Help from tutor Simon Rennocks and U of M Full Stack Bootcamp modules
 
 ## License
 MIT Licesne Copyright (c) 2023 bjschoffman
